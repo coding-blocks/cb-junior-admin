@@ -22,6 +22,7 @@ const Title = styled.div`
   padding: 8px;
 `
 
+const noop = () => {}
 
 const OrderedArrayInput = (props) => {
   const { id, choices, input } = props;
@@ -29,7 +30,7 @@ const OrderedArrayInput = (props) => {
 
   const children = React.cloneElement(props.children, props)
 
-  const selectedChoices = values.map(v => choices.find(c => c.id === v))
+  const selectedChoices = (values || []).map(v => choices.find(c => c.id === v)) || []
 
   const onDragEnd = result => {
     const { destination, source, draggableId } = result
@@ -43,10 +44,10 @@ const OrderedArrayInput = (props) => {
     input.onChange(newValues)
   }
 
-  console.log(selectedChoices)
   return (
     <div>
       {children}
+      { selectedChoices.length ?
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId={id}>
           {(provided, snapshot) => (
@@ -67,7 +68,7 @@ const OrderedArrayInput = (props) => {
           )}
 
         </Droppable>
-      </DragDropContext>
+      </DragDropContext> : noop}
     </div>
   )
 }
