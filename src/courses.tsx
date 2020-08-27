@@ -33,6 +33,7 @@ import {
 
 import OrderedFormIterator from './lib/OrderedFormIterator'
 import RichTextInput from "ra-input-rich-text";
+import OrderedArrayInput from "./lib/OrderedArrayInput";
 
 const CourseFilter = (props: any) => {
   return (<Filter {...props}>
@@ -115,7 +116,10 @@ export const CourseEdit = (props: any) => (
         <SelectInput label="Instructor" optionText="firstname" />
       </ReferenceInput> */}
       <ReferenceArrayInput label="contents" source="contents" reference="contents">
-        <AutocompleteArrayInput optionText='title'/>
+        <OrderedArrayInput>
+          <AutocompleteArrayInput optionText='title' />
+        </OrderedArrayInput>
+        
       </ReferenceArrayInput>
       {/* <SelectInput
         source="rating"

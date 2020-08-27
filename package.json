@@ -16,6 +16,7 @@
     "react-dom": "16.8.3",
     "react-scripts": "2.1.8",
     "recompose": "^0.30.0",
+    "styled-components": "^5.1.1",
     "typescript": "3.3.4000"
   },
   "scripts": {
@@ -39,5 +40,4 @@
     "gh-pages": "^3.1.0"
   },
   "homepage": "http://coding-blocks.github.io/cb-junior-admin"
-
 }
