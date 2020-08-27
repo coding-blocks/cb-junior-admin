@@ -1,6 +1,5 @@
 import React from "react";
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import Paper from '@material-ui/core/Paper';
 import styled from 'styled-components';
 
 const ListItem = styled.div`
@@ -23,6 +22,7 @@ const Title = styled.div`
 `
 
 const noop = () => {}
+const identity = v => v
 
 const OrderedArrayInput = (props) => {
   const { id, choices, input } = props;
@@ -30,7 +30,7 @@ const OrderedArrayInput = (props) => {
 
   const children = React.cloneElement(props.children, props)
 
-  const selectedChoices = (values || []).map(v => choices.find(c => c.id === v)) || []
+  const selectedChoices = (values || []).map(v => choices.find(c => c.id === v)).filter(identity)
 
   const onDragEnd = result => {
     const { destination, source, draggableId } = result
@@ -58,7 +58,7 @@ const OrderedArrayInput = (props) => {
               {...provided.droppableProps}>
 
               <Title>Order</Title>
-
+              {console.log(selectedChoices)}
               {selectedChoices.map(
                 (v, i) => <ChoiceItem value={v} index={i} key={v.id} />
               )}
@@ -85,7 +85,7 @@ const ChoiceItem = (props) => {
           {...provided.dragHandleProps}
           isDragging={snapshot.isDragging}
         >
-          [<i>#{value.id}</i>] <b>{value.title}</b>
+          [<i>#{value.id}</i>] <b>{value.title || <i> "DELETED" </i>}</b>
         </ListItem>
       )}
     </Draggable>
