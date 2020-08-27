@@ -31,7 +31,6 @@ import {
   SimpleFormIterator
 } from "react-admin";
 
-import OrderedFormIterator from './lib/OrderedFormIterator'
 import RichTextInput from "ra-input-rich-text";
 import OrderedArrayInput from "./lib/OrderedArrayInput";
 
@@ -87,8 +86,9 @@ export const CourseCreate = (props: any) => (
         <ImageField source="src" title="title" />
       </ImageInput>
       <ReferenceArrayInput label="contents" source="contents" reference="contents">
-        <AutocompleteArrayInput optionText="title" />
-        <OrderedFormIterator />
+        <OrderedArrayInput>
+          <AutocompleteArrayInput optionText='title' />
+        </OrderedArrayInput>
       </ReferenceArrayInput>
     </SimpleForm>
   </Create>
@@ -119,7 +119,6 @@ export const CourseEdit = (props: any) => (
         <OrderedArrayInput>
           <AutocompleteArrayInput optionText='title' />
         </OrderedArrayInput>
-        
       </ReferenceArrayInput>
       {/* <SelectInput
         source="rating"
