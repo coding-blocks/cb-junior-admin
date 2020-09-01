@@ -23,6 +23,8 @@ import {
   UrlField
 } from "react-admin";
 import RichTextInput from "ra-input-rich-text";
+import YouTube from "react-youtube";
+import getYouTubeID from "get-youtube-id";
 
 const ContentFilter = (props: any) => {
   return (<Filter {...props}>
@@ -47,6 +49,7 @@ export const ContentShow = (props: any) => (
     <SimpleShowLayout>
       <TextField source="title" />
       <TextField source="type" />
+      {/*<YouTube videoId={getYouTubeID("url")}*/}
       <UrlField source="url" />
     </SimpleShowLayout>
   </Show>

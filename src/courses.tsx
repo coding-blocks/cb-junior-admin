@@ -85,6 +85,13 @@ export const CourseCreate = (props: any) => (
       <ImageInput source="background">
         <ImageField source="src" title="title" />
       </ImageInput>
+      <ReferenceArrayInput
+          label="Instructors"
+          source="instructorIds"
+          reference="Instructors"
+      >
+        <AutocompleteArrayInput optionText='firstname' />
+      </ReferenceArrayInput>
       <ReferenceArrayInput label="contents" source="contents" reference="contents">
         <OrderedArrayInput>
           <AutocompleteArrayInput optionText='title' />
@@ -115,6 +122,14 @@ export const CourseEdit = (props: any) => (
       >
         <SelectInput label="Instructor" optionText="firstname" />
       </ReferenceInput> */}
+      <ReferenceArrayInput
+        label="Instructors"
+        source="instructorIds"
+        reference="Instructors"
+        >
+        <AutocompleteArrayInput optionText='firstname' />
+      </ReferenceArrayInput>
+
       <ReferenceArrayInput label="contents" source="contents" reference="contents">
         <OrderedArrayInput>
           <AutocompleteArrayInput optionText='title' />

@@ -8,6 +8,7 @@ import {
   RAFirebaseOptions
 } from "react-admin-firebase";
 import {ContentCreate, ContentEdit, ContentList, ContentShow} from "./contents";
+import {InstructorCreate, InstructorEdit, InstructorList, InstructorShow} from './instructors'
 
 const config = require("./FIREBASE_CONFIG.js").firebaseConfig;
 
@@ -33,10 +34,10 @@ class App extends React.Component {
 
         <Resource
           name="Instructors"
-          list={CourseList}
-          show={CourseShow}
-          create={CourseCreate}
-          edit={CourseEdit}
+          list={InstructorList}
+          show={InstructorShow}
+          create={InstructorCreate}
+          edit={InstructorEdit}
         />
 
         <Resource
