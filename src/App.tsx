@@ -13,7 +13,7 @@ import {InstructorCreate, InstructorEdit, InstructorList, InstructorShow} from '
 const config = require("./FIREBASE_CONFIG.js").firebaseConfig;
 
 const options: RAFirebaseOptions = {
-  logging: true,
+  logging: process.env.NODE_ENV != 'production',
   // rootRef: "/",
   watch: ["courses"]
 };
