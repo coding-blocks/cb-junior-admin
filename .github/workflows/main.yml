@@ -57,7 +57,7 @@ jobs:
 
       # Run npm i to get dev dependencies
       - name: Run npm install
-        run: npm install
+        run: npm install --quiet
 
       # Step to Build code 
       - name: Build Code
