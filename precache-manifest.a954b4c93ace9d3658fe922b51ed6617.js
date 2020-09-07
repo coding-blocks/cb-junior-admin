@@ -1,7 +1,7 @@
 self.__precacheManifest = [
   {
-    "revision": "ef9b2dbf851eeeb2806d",
-    "url": "/cb-junior-admin/static/js/main.698feeca.chunk.js"
+    "revision": "47c9eb44eca6679c6686",
+    "url": "/cb-junior-admin/static/js/main.0d2ce448.chunk.js"
   },
   {
     "revision": "20ac02457a0faf5b6d4c",
@@ -12,7 +12,7 @@ self.__precacheManifest = [
     "url": "/cb-junior-admin/static/js/2.0126c1eb.chunk.js"
   },
   {
-    "revision": "8aeb5e569c30e76b5001c1d7857127d1",
+    "revision": "b2854d02d4bd33bee9d313c79a7f90ca",
     "url": "/cb-junior-admin/index.html"
   }
 ];
