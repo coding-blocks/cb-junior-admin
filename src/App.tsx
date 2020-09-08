@@ -15,7 +15,7 @@ const config = require("./FIREBASE_CONFIG.js").firebaseConfig;
 const options: RAFirebaseOptions = {
   logging: process.env.NODE_ENV != 'production',
   // rootRef: "/",
-  watch: ["courses"]
+  //   dontwatch: ['courses', 'Instructors', 'contents']
 };
 const dataProvider = FirebaseDataProvider(config, options);
 const authProvider = FirebaseAuthProvider(config, options);

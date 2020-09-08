@@ -89,10 +89,14 @@ export const CourseCreate = (props: any) => (
           label="Instructors"
           source="instructorIds"
           reference="Instructors"
+          filterToQuery={ (searchText :any) => ({ firstname: searchText })}
       >
-        <AutocompleteArrayInput optionText='firstname' />
+        <AutocompleteArrayInput optionText='firstname'/>
       </ReferenceArrayInput>
-      <ReferenceArrayInput label="contents" source="contents" reference="contents">
+
+      <ReferenceArrayInput label="contents" source="contents" reference="contents"
+                           filterToQuery={ (searchText :any) => ({ title: searchText })}
+      >
         <OrderedArrayInput>
           <AutocompleteArrayInput optionText='title' />
         </OrderedArrayInput>
@@ -126,11 +130,14 @@ export const CourseEdit = (props: any) => (
         label="Instructors"
         source="instructorIds"
         reference="Instructors"
+        filterToQuery={ (searchText :any) => ({ firstname: searchText })}
         >
-        <AutocompleteArrayInput optionText='firstname' />
+        <AutocompleteArrayInput optionText='firstname' allowEmpty/>
       </ReferenceArrayInput>
 
-      <ReferenceArrayInput label="contents" source="contents" reference="contents">
+      <ReferenceArrayInput label="contents" source="contents" reference="contents"
+                           filterToQuery={ (searchText :any) => ({ title: searchText })}
+      >
         <OrderedArrayInput>
           <AutocompleteArrayInput optionText='title' />
         </OrderedArrayInput>
