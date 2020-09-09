@@ -10,7 +10,6 @@ import {
   Filter,
   // DisabledInput,
   SimpleShowLayout,
-  ReferenceField,
   SimpleForm,
   TextField,
   TextInput,
@@ -18,21 +17,20 @@ import {
   EditButton,
   DeleteButton,
   RichTextField,
-  SelectInput,
-  FileField,
-  FileInput,
-  ReferenceInput,
   ReferenceArrayField,
   ImageField,
   ReferenceArrayInput,
   AutocompleteArrayInput,
   ImageInput,
   UrlField,
-  SimpleFormIterator
+  SelectArrayInput
 } from "react-admin";
 
 import RichTextInput from "ra-input-rich-text";
 import OrderedArrayInput from "./lib/OrderedArrayInput";
+
+
+const AUDIENCE_VALUES = ['1st - 4th', '5th - 8th', '9th - 10th', '11th - 12th'];
 
 const CourseFilter = (props: any) => {
   return (<Filter {...props}>
@@ -85,6 +83,9 @@ export const CourseCreate = (props: any) => (
       <ImageInput source="background">
         <ImageField source="src" title="title" />
       </ImageInput>
+
+      <SelectArrayInput source="audience" choices={AUDIENCE_VALUES.map(a => ({name: a}))} optionValue="name" />
+
       <ReferenceArrayInput
           label="Instructors"
           source="instructorIds"
@@ -118,14 +119,10 @@ export const CourseEdit = (props: any) => (
       <ImageInput source="background">
         <ImageField source="src" title="title" />
       </ImageInput>
-      {/* <ReferenceInput
-        label="Instrcutor"
-        source="instructor"
-        reference="Instructors"
-        // filter={{ isAdmin: true }}
-      >
-        <SelectInput label="Instructor" optionText="firstname" />
-      </ReferenceInput> */}
+
+
+      <SelectArrayInput source="audience" choices={AUDIENCE_VALUES.map(a => ({name: a}))} optionValue="name" />
+
       <ReferenceArrayInput
         label="Instructors"
         source="instructorIds"
