@@ -28,7 +28,7 @@ import {
 
 import RichTextInput from "ra-input-rich-text";
 import OrderedArrayInput from "./lib/OrderedArrayInput";
-
+import { ColorField, ColorInput } from 'react-admin-color-input';
 
 const AUDIENCE_VALUES = ['1st - 4th', '5th - 8th', '9th - 10th', '11th - 12th'];
 
@@ -61,6 +61,7 @@ export const CourseShow = (props: any) => (
       <TextField source="slug" />
       <ImageField source="logo.src" />
       <ImageField source="background.src" />
+      <ColorField source="theme_color" />
       <ReferenceArrayField source="contents" label="Contents" reference="contents">
         <Datagrid>
           <TextField source="title" label="Title"/>
@@ -83,6 +84,7 @@ export const CourseCreate = (props: any) => (
       <ImageInput source="background">
         <ImageField source="src" title="title" />
       </ImageInput>
+      <ColorInput source="theme_color" label="Theme Color"/>
 
       <SelectArrayInput source="audience" choices={AUDIENCE_VALUES.map(a => ({name: a}))} optionValue="name" />
 
@@ -119,7 +121,7 @@ export const CourseEdit = (props: any) => (
       <ImageInput source="background">
         <ImageField source="src" title="title" />
       </ImageInput>
-
+      <ColorInput source="theme_color" label="Theme Color"/>
 
       <SelectArrayInput source="audience" choices={AUDIENCE_VALUES.map(a => ({name: a}))} optionValue="name" />
 
