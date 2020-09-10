@@ -23,7 +23,9 @@ import {
   AutocompleteArrayInput,
   ImageInput,
   UrlField,
-  SelectArrayInput
+  SelectArrayInput,
+  ArrayInput,
+  ArrayField
 } from "react-admin";
 
 import RichTextInput from "ra-input-rich-text";
@@ -62,10 +64,11 @@ export const CourseShow = (props: any) => (
       <ImageField source="logo.src" />
       <ImageField source="background.src" />
       <ColorField source="theme_color" />
+      <ArrayField source="tags" />
       <ReferenceArrayField source="contents" label="Contents" reference="contents">
         <Datagrid>
-          <TextField source="title" label="Title"/>
-          <UrlField source="url" label="Url"/>
+          <TextField source="title" label="Title" />
+          <UrlField source="url" label="Url" />
         </Datagrid>
       </ReferenceArrayField>
     </SimpleShowLayout>
@@ -84,21 +87,23 @@ export const CourseCreate = (props: any) => (
       <ImageInput source="background">
         <ImageField source="src" title="title" />
       </ImageInput>
-      <ColorInput source="theme_color" label="Theme Color"/>
+      <ColorInput source="theme_color" label="Theme Color" />
 
-      <SelectArrayInput source="audience" choices={AUDIENCE_VALUES.map(a => ({name: a}))} optionValue="name" />
-
+      <SelectArrayInput source="audience" choices={AUDIENCE_VALUES.map(a => ({ name: a }))} optionValue="name" />
+      <ArrayInput source="tags">
+        <TextInput />
+      </ArrayInput>
       <ReferenceArrayInput
-          label="Instructors"
-          source="instructorIds"
-          reference="Instructors"
-          filterToQuery={ (searchText :any) => ({ firstname: searchText })}
+        label="Instructors"
+        source="instructorIds"
+        reference="Instructors"
+        filterToQuery={(searchText: any) => ({ firstname: searchText })}
       >
-        <AutocompleteArrayInput optionText='firstname'/>
+        <AutocompleteArrayInput optionText='firstname' />
       </ReferenceArrayInput>
 
       <ReferenceArrayInput label="contents" source="contents" reference="contents"
-                           filterToQuery={ (searchText :any) => ({ title: searchText })}
+        filterToQuery={(searchText: any) => ({ title: searchText })}
       >
         <OrderedArrayInput>
           <AutocompleteArrayInput optionText='title' />
@@ -121,21 +126,24 @@ export const CourseEdit = (props: any) => (
       <ImageInput source="background">
         <ImageField source="src" title="title" />
       </ImageInput>
-      <ColorInput source="theme_color" label="Theme Color"/>
 
-      <SelectArrayInput source="audience" choices={AUDIENCE_VALUES.map(a => ({name: a}))} optionValue="name" />
+      <ColorInput source="theme_color" label="Theme Color" />
 
+      <SelectArrayInput source="audience" choices={AUDIENCE_VALUES.map(a => ({ name: a }))} optionValue="name" />
+      <ArrayInput source="tags">
+        <TextInput title="title" />
+      </ArrayInput>
       <ReferenceArrayInput
         label="Instructors"
         source="instructorIds"
         reference="Instructors"
-        filterToQuery={ (searchText :any) => ({ firstname: searchText })}
-        >
-        <AutocompleteArrayInput optionText='firstname' allowEmpty/>
+        filterToQuery={(searchText: any) => ({ firstname: searchText })}
+      >
+        <AutocompleteArrayInput optionText='firstname' allowEmpty />
       </ReferenceArrayInput>
 
       <ReferenceArrayInput label="contents" source="contents" reference="contents"
-                           filterToQuery={ (searchText :any) => ({ title: searchText })}
+        filterToQuery={(searchText: any) => ({ title: searchText })}
       >
         <OrderedArrayInput>
           <AutocompleteArrayInput optionText='title' />
