@@ -23,7 +23,9 @@ import {
   AutocompleteArrayInput,
   ImageInput,
   UrlField,
-  SelectArrayInput
+  SelectArrayInput,
+  ArrayInput,
+  SimpleFormIterator
 } from "react-admin";
 
 import RichTextInput from "ra-input-rich-text";
@@ -122,6 +124,12 @@ export const CourseEdit = (props: any) => (
         <ImageField source="src" title="title" />
       </ImageInput>
       <ColorInput source="theme_color" label="Theme Color"/>
+
+      <ArrayInput source="tags">
+        <SimpleFormIterator>
+          <TextInput/>
+        </SimpleFormIterator>
+      </ArrayInput>
 
       <SelectArrayInput source="audience" choices={AUDIENCE_VALUES.map(a => ({name: a}))} optionValue="name" />
 
