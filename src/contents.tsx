@@ -20,7 +20,10 @@ import {
   SelectInput,
   FileField,
   FileInput,
-  UrlField
+  UrlField,
+  BooleanInput,
+  BooleanField,
+  DateTimeInput
 } from "react-admin";
 import RichTextInput from "ra-input-rich-text";
 import YouTube from "react-youtube";
@@ -51,6 +54,7 @@ export const ContentShow = (props: any) => (
       <TextField source="type" />
       {/*<YouTube videoId={getYouTubeID("url")}*/}
       <UrlField source="url" />
+      <BooleanField source="isLive" />
     </SimpleShowLayout>
   </Show>
 );
@@ -66,6 +70,8 @@ export const ContentCreate = (props: any) => (
           ]}
       />
       <TextInput source="url" />
+      <DateTimeInput source="published_at" />
+      <BooleanInput label="Live"source="isLive" />
     </SimpleForm>
   </Create>
 );
@@ -82,6 +88,8 @@ export const ContentEdit = (props: any) => (
           ]}
       />
       <TextInput source="url" />
+      <DateTimeInput source="published_at" />
+      <BooleanInput label="Live"source="isLive" />
     </SimpleForm>
   </Edit>
 );
