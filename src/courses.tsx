@@ -25,7 +25,8 @@ import {
   UrlField,
   SelectArrayInput,
   ArrayInput,
-  SimpleFormIterator
+  SimpleFormIterator,
+  NumberInput
 } from "react-admin";
 
 import RichTextInput from "ra-input-rich-text";
@@ -64,6 +65,7 @@ export const CourseShow = (props: any) => (
       <ImageField source="logo.src" />
       <ImageField source="background.src" />
       <ColorField source="theme_color" />
+      <TextField source="slug" />
       <ReferenceArrayField source="contents" label="Contents" reference="contents">
         <Datagrid>
           <TextField source="title" label="Title"/>
@@ -89,7 +91,8 @@ export const CourseCreate = (props: any) => (
       <ColorInput source="theme_color" label="Theme Color"/>
 
       <SelectArrayInput source="audience" choices={AUDIENCE_VALUES.map(a => ({name: a}))} optionValue="name" />
-
+      <NumberInput source="min_class" max="12" min="1" step="1" />
+      <NumberInput source="max_class" max="12" min="1" step="1"/>
       <ReferenceArrayInput
           label="Instructors"
           source="instructorIds"
@@ -132,7 +135,8 @@ export const CourseEdit = (props: any) => (
       </ArrayInput>
 
       <SelectArrayInput source="audience" choices={AUDIENCE_VALUES.map(a => ({name: a}))} optionValue="name" />
-
+      <NumberInput source="min_class" step={1} min = {1} />
+      <NumberInput source="max_class" step={1} max = {12}/>
       <ReferenceArrayInput
         label="Instructors"
         source="instructorIds"
