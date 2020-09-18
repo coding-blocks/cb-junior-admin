@@ -30,10 +30,11 @@ import {
 } from "react-admin";
 
 import RichTextInput from "ra-input-rich-text";
-import OrderedArrayInput from "./lib/OrderedArrayInput";
+import OrderedArrayInput from "../lib/OrderedArrayInput";
 import { ColorField, ColorInput } from 'react-admin-color-input';
-import Transform from "./lib/utils/transformResource";
-import TCourse from "./lib/utils/transformers/courses";
+import Transform from "../lib/utils/transformResource";
+import TCourse from "../lib/utils/transformers/courses";
+import saveInstructors from "./mutations/saveInstructors";
 
 const AUDIENCE_VALUES = ['1st - 4th', '5th - 8th', '9th - 10th', '11th - 12th'];
 
@@ -59,22 +60,27 @@ export const CourseList = (props: any) => (
 
 export const CourseShow = (props: any) => (
   <Show {...props}>
-    <SimpleShowLayout>
-      <TextField source="id" />
-      <TextField source="title" />
-      <RichTextField source="subtitle" />
-      <TextField source="slug" />
-      <ImageField source="logo.src" />
-      <ImageField source="background.src" />
-      <ColorField source="theme_color" />
-      <TextField source="slug" />
-      <ReferenceArrayField source="contents" label="Contents" reference="contents">
-        <Datagrid>
-          <TextField source="title" label="Title"/>
-          <UrlField source="url" label="Url"/>
-        </Datagrid>
-      </ReferenceArrayField>
-    </SimpleShowLayout>
+      <SimpleShowLayout>
+
+        <TextField source="id" />
+        <TextField source="title" />
+        <RichTextField source="subtitle" />
+        <TextField source="slug" />
+        <ImageField source="logo.src" />
+        <ImageField source="background.src" />
+        <ColorField source="theme_color" />
+        <TextField source="slug" />
+
+        <Transform transformRecord={TCourse}>
+        <ReferenceArrayField source="contentIds" label="Contents" reference="contents">
+          <Datagrid>
+            <TextField source="title" label="Title"/>
+            <UrlField source="url" label="Url"/>
+          </Datagrid>
+        </ReferenceArrayField>
+        </Transform>
+      </SimpleShowLayout>
+    {/*</Transform>*/}
   </Show>
 );
 
@@ -95,28 +101,28 @@ export const CourseCreate = (props: any) => (
       <SelectArrayInput source="audience" choices={AUDIENCE_VALUES.map(a => ({name: a}))} optionValue="name" />
       <NumberInput source="min_class" max="12" min="1" step="1" />
       <NumberInput source="max_class" max="12" min="1" step="1"/>
-      <ReferenceArrayInput
-          label="Instructors"
-          source="instructorIds"
-          reference="Instructors"
-          filterToQuery={ (searchText :any) => ({ firstname: searchText })}
-      >
-        <AutocompleteArrayInput optionText='firstname'/>
-      </ReferenceArrayInput>
+      {/*<ReferenceArrayInput*/}
+      {/*    label="Instructors"*/}
+      {/*    source="instructorIds"*/}
+      {/*    reference="Instructors"*/}
+      {/*    filterToQuery={ (searchText :any) => ({ firstname: searchText })}*/}
+      {/*>*/}
+      {/*  <AutocompleteArrayInput optionText='firstname'/>*/}
+      {/*</ReferenceArrayInput>*/}
 
-      <ReferenceArrayInput label="contents" source="contents" reference="contents"
-                           filterToQuery={ (searchText :any) => ({ title: searchText })}
-      >
-        <OrderedArrayInput>
-          <AutocompleteArrayInput optionText='title' />
-        </OrderedArrayInput>
-      </ReferenceArrayInput>
+      {/*<ReferenceArrayInput label="contents" source="contents" reference="contents"*/}
+      {/*                     filterToQuery={ (searchText :any) => ({ title: searchText })}*/}
+      {/*>*/}
+      {/*  <OrderedArrayInput>*/}
+      {/*    <AutocompleteArrayInput optionText='title' />*/}
+      {/*  </OrderedArrayInput>*/}
+      {/*</ReferenceArrayInput>*/}
     </SimpleForm>
   </Create>
 );
 
 export const CourseEdit = (props: any) => (
-  <Edit {...props}>
+  <Edit {...props} transform={beforeSave}>
     {/* TransForm<transformRecord> Component: To change prop.record to suit react-admin format
         transformRecord (record) => record (transformed record)
         Ex:
@@ -138,9 +144,7 @@ export const CourseEdit = (props: any) => (
            }
 
     */}
-    <Transform
-      transformRecord={TCourse}
-    >
+    <Transform transformRecord={TCourse}>
       <SimpleForm>
 
       <TextInput source="title" />
@@ -204,3 +208,12 @@ export const CourseEdit = (props: any) => (
     </Transform>
   </Edit>
 );
+
+
+async function beforeSave(course: any) {
+  const forkedCourse = {...course};
+  await saveInstructors(forkedCourse); //(Abhishek): this is async; need to await it before switching?
+  const keysToRemoveBeforeApiCall: string[] = ['contentIds', 'instructorIds', 'course_instructors', 'course_contents']
+  keysToRemoveBeforeApiCall.forEach(k => delete forkedCourse[k])
+  return forkedCourse;
+}

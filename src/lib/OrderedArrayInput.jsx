@@ -58,7 +58,6 @@ const OrderedArrayInput = (props) => {
               {...provided.droppableProps}>
 
               <Title>Order</Title>
-              {console.log(selectedChoices)}
               {selectedChoices.map(
                 (v, i) => <ChoiceItem value={v} index={i} key={v.id} />
               )}

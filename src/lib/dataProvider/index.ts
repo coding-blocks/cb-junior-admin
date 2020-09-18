@@ -1,6 +1,5 @@
 import ApolloClient from "apollo-boost";
 
-
 // @ts-ignore
 import { buildQueryFactory } from './ra-data-hasura-graphql-src/buildQuery';
 // @ts-ignore
@@ -76,6 +75,7 @@ export const buildFieldsCustom =  (type: { name: string; }) => {
             gqlTypes.selectionSet([
               gqlTypes.field(gqlTypes.name('id')),
               gqlTypes.field(gqlTypes.name('title')),
+              gqlTypes.field(gqlTypes.name('url')),
             ])
           ),
         ])
