@@ -32,6 +32,8 @@ import {
 import RichTextInput from "ra-input-rich-text";
 import OrderedArrayInput from "./lib/OrderedArrayInput";
 import { ColorField, ColorInput } from 'react-admin-color-input';
+import Transform from "./lib/utils/transformResource";
+import TCourse from "./lib/utils/transformers/courses";
 
 const AUDIENCE_VALUES = ['1st - 4th', '5th - 8th', '9th - 10th', '11th - 12th'];
 
@@ -115,8 +117,32 @@ export const CourseCreate = (props: any) => (
 
 export const CourseEdit = (props: any) => (
   <Edit {...props}>
-    <SimpleForm>
-      {/* <DisabledInput source="id" /> */}
+    {/* TransForm<transformRecord> Component: To change prop.record to suit react-admin format
+        transformRecord (record) => record (transformed record)
+        Ex:
+          course {
+            course_instructors [
+                ...,
+                ...,
+                {
+                  instructor: {
+                    id: 1
+                   }
+                }
+              ]
+           }
+
+        To:
+          course {
+            instructorIds: [1,4, ...]
+           }
+
+    */}
+    <Transform
+      transformRecord={TCourse}
+    >
+      <SimpleForm>
+
       <TextInput source="title" />
       <RichTextInput source="subtitle" />
       <TextInput source="slug" />
@@ -128,31 +154,41 @@ export const CourseEdit = (props: any) => (
       </ImageInput>
       <ColorInput source="theme_color" label="Theme Color"/>
 
-      <ArrayInput source="tags">
-        <SimpleFormIterator>
-          <TextInput/>
-        </SimpleFormIterator>
-      </ArrayInput>
+      {/*<ArrayInput source="tags">*/}
+      {/*  <SimpleFormIterator>*/}
+      {/*    <TextInput/>*/}
+      {/*  </SimpleFormIterator>*/}
+      {/*</ArrayInput>*/}
 
-      <SelectArrayInput source="audience" choices={AUDIENCE_VALUES.map(a => ({name: a}))} optionValue="name" />
+      {/*<SelectArrayInput source="audience" choices={AUDIENCE_VALUES.map(a => ({name: a}))} optionValue="name" />*/}
+
+
       <NumberInput source="min_class" step={1} min = {1} />
       <NumberInput source="max_class" step={1} max = {12}/>
+
+
+
+       {/*We use instructorIds as source here. Make sure it is populated in the current record via Transform*/}
       <ReferenceArrayInput
         label="Instructors"
         source="instructorIds"
-        reference="Instructors"
+        reference="instructors"
         filterToQuery={ (searchText :any) => ({ firstname: searchText })}
-        >
-        <AutocompleteArrayInput optionText='firstname' allowEmpty/>
+      >
+        <AutocompleteArrayInput optionText="firstname" allowEmpty/>
       </ReferenceArrayInput>
 
-      <ReferenceArrayInput label="contents" source="contents" reference="contents"
-                           filterToQuery={ (searchText :any) => ({ title: searchText })}
+      <ReferenceArrayInput label="contents" source="contentIds" reference="contents"
+                             filterToQuery={ (searchText :any) => ({ title: searchText })}
       >
         <OrderedArrayInput>
           <AutocompleteArrayInput optionText='title' />
         </OrderedArrayInput>
       </ReferenceArrayInput>
+
+
+
+
       {/* <SelectInput
         source="rating"
         choices={[
@@ -165,5 +201,6 @@ export const CourseEdit = (props: any) => (
         <FileField source="src" title="title" />
       </FileInput> */}
     </SimpleForm>
+    </Transform>
   </Edit>
 );

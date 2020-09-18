@@ -1,27 +1,36 @@
 import * as React from "react";
 import { PostList, PostShow, PostCreate, PostEdit } from "./posts";
 import { CourseList, CourseCreate, CourseEdit, CourseShow } from './courses';
-import { Admin, Resource } from "react-admin";
-import {
-  FirebaseDataProvider,
-  FirebaseAuthProvider,
-  RAFirebaseOptions
-} from "react-admin-firebase";
+import { Admin, Resource, fetchUtils } from "react-admin";
+import buildHasuraProvider from 'ra-data-hasura-graphql';
+
+import AuthProvider from "./lib/AuthProvider";
 import {ContentCreate, ContentEdit, ContentList, ContentShow} from "./contents";
 import {InstructorCreate, InstructorEdit, InstructorList, InstructorShow} from './instructors'
+import {buildQuery, client} from "./lib/dataProvider";
 
-const config = require("./FIREBASE_CONFIG.js").firebaseConfig;
-
-const options: RAFirebaseOptions = {
-  logging: process.env.NODE_ENV != 'production',
-  // rootRef: "/",
-  //   dontwatch: ['courses', 'Instructors', 'contents']
-};
-const dataProvider = FirebaseDataProvider(config, options);
-const authProvider = FirebaseAuthProvider(config, options);
+// const dataProvider = buildHasuraProvider({client});
+const authProvider = AuthProvider;
 
 class App extends React.Component {
+  constructor() {
+    // @ts-ignore
+    super();
+    this.state = { dataProvider: null };
+  }
+
+  componentDidMount() {
+    buildHasuraProvider({client, buildQuery}).then((dataProvider: any) => {
+      console.log(dataProvider)
+        this.setState({ dataProvider })
+    });
+  }
   render() {
+    const { dataProvider } : any = this.state;
+    if (!dataProvider) {
+      return <div>Loading....</div>
+    }
+
     return (
       <Admin dataProvider={dataProvider} authProvider={authProvider}>
         <Resource
@@ -33,7 +42,7 @@ class App extends React.Component {
         />
 
         <Resource
-          name="Instructors"
+          name="instructors"
           list={InstructorList}
           show={InstructorShow}
           create={InstructorCreate}
@@ -48,13 +57,16 @@ class App extends React.Component {
           edit={ContentEdit}
         />
         
-        {/*<Resource*/}
-        {/*  name="posts"*/}
-        {/*  list={PostList}*/}
-        {/*  show={PostShow}*/}
-        {/*  create={PostCreate}*/}
-        {/*  edit={PostEdit}*/}
-        {/*/>*/}
+        <Resource
+          name="posts"
+          list={PostList}
+          show={PostShow}
+          create={PostCreate}
+          edit={PostEdit}
+        />
+        <Resource
+          name="course_instructors"
+        />
       </Admin>
     );
   }

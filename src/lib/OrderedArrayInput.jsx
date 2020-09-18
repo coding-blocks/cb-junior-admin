@@ -49,7 +49,7 @@ const OrderedArrayInput = (props) => {
       {children}
       { selectedChoices.length ?
       <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId={id}>
+        <Droppable droppableId={String(id)}>
           {(provided, snapshot) => (
             <List
               component='nav'
@@ -77,7 +77,7 @@ const OrderedArrayInput = (props) => {
 const ChoiceItem = (props) => {
   const { value, index } = props;
   return (
-    <Draggable draggableId={value.id} index={index}>
+    <Draggable draggableId={String(value.id)} index={index}>
       {(provided, snapshot) => (
         <ListItem
           ref={provided.innerRef}
