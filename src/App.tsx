@@ -9,6 +9,7 @@ import {
 } from "react-admin-firebase";
 import {ContentCreate, ContentEdit, ContentList, ContentShow} from "./contents";
 import {InstructorCreate, InstructorEdit, InstructorList, InstructorShow} from './instructors'
+import { NotificationList, NotificationShow, NotificationCreate } from "./notifications";
 
 const config = require("./FIREBASE_CONFIG.js").firebaseConfig;
 
@@ -46,6 +47,13 @@ class App extends React.Component {
           show={ContentShow}
           create={ContentCreate}
           edit={ContentEdit}
+        />
+
+        <Resource
+          name="Notifications"
+          list={NotificationList}
+          show={NotificationShow}
+          create={NotificationCreate}
         />
         
         {/*<Resource*/}
