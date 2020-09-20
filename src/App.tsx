@@ -57,16 +57,14 @@ class App extends React.Component {
           edit={ContentEdit}
         />
         
-        <Resource
-          name="posts"
-          list={PostList}
-          show={PostShow}
-          create={PostCreate}
-          edit={PostEdit}
-        />
-        <Resource
-          name="course_instructors"
-        />
+        {/*<Resource*/}
+        {/*  name="posts"*/}
+        {/*  list={PostList}*/}
+        {/*  show={PostShow}*/}
+        {/*  create={PostCreate}*/}
+        {/*  edit={PostEdit}*/}
+        {/*/>*/}
+
       </Admin>
     );
   }

@@ -35,6 +35,7 @@ import { ColorField, ColorInput } from 'react-admin-color-input';
 import Transform from "../lib/utils/transformResource";
 import TCourse from "../lib/utils/transformers/courses";
 import saveInstructors from "./mutations/saveInstructors";
+import saveContents from "./mutations/saveContents";
 
 const AUDIENCE_VALUES = ['1st - 4th', '5th - 8th', '9th - 10th', '11th - 12th'];
 
@@ -190,9 +191,6 @@ export const CourseEdit = (props: any) => (
         </OrderedArrayInput>
       </ReferenceArrayInput>
 
-
-
-
       {/* <SelectInput
         source="rating"
         choices={[
@@ -211,9 +209,16 @@ export const CourseEdit = (props: any) => (
 
 
 async function beforeSave(course: any) {
+  // make sure to return a copy and not mutate original object.
   const forkedCourse = {...course};
-  await saveInstructors(forkedCourse); //(Abhishek): this is async; need to await it before switching?
+
+  // set Instructors
+  await saveInstructors(forkedCourse);
+  await saveContents(forkedCourse);
+
+  // remove rel keys so that react admin don't try to set these and fail
   const keysToRemoveBeforeApiCall: string[] = ['contentIds', 'instructorIds', 'course_instructors', 'course_contents']
   keysToRemoveBeforeApiCall.forEach(k => delete forkedCourse[k])
+
   return forkedCourse;
 }

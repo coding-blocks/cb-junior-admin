@@ -31,10 +31,12 @@ export default async function (course: any) {
   // get existing data
   const {id: courseId, instructorIds: newInstructorIds} = course
 
-  const { data } = await client.query({
+  const {data} = await client.query({
     query: QUERY,
-    variables: {courseId}
+    variables: {courseId},
+    fetchPolicy: 'network-only' // make sure not to pickup from cache
   })
+
 
   const oldInstructorIds: number[] = data.course_instructors.map(ci => ci.instructorId)
 
@@ -43,19 +45,14 @@ export default async function (course: any) {
   // @ts-ignore
   const toRemove: number[] = difference(oldInstructorIds, newInstructorIds)
 
-  console.log("SET DIFF", oldInstructorIds, newInstructorIds, toAdd, toRemove);
-  //TODO: fix this set
-
   // delete old instructors
-  await !toRemove.length && client.mutate({
+  await (toRemove.length && client.mutate({
     mutation: MUTATION_DELETE,
     variables: {
       courseId,
       instructorIds: toRemove
     }
-  })
-
-
+  }))
 
   // add new ones
   await client.mutate({

@@ -12,7 +12,7 @@ const ListItem = styled.div`
 const List = styled.div`
   padding: 8px;
   border: 1px solid grey;
-  background-color: ${props => props.isDraggingOver ? '#2097F3': 'white'}
+  background-color: ${props => props.isDraggingOver ? '#EDEEF2': 'white'}
 `
 
 const Title = styled.div`
@@ -39,7 +39,7 @@ const OrderedArrayInput = (props) => {
 
     const newValues = Array.from(values)
     newValues.splice(source.index, 1);
-    newValues.splice(destination.index, 0, draggableId)
+    newValues.splice(destination.index, 0, +draggableId)
 
     input.onChange(newValues)
   }
@@ -84,7 +84,7 @@ const ChoiceItem = (props) => {
           {...provided.dragHandleProps}
           isDragging={snapshot.isDragging}
         >
-          [<i>#{value.id}</i>] <b>{value.title || <i> "DELETED" </i>}</b>
+          [<i>ID: {value.id}</i>] <b>{value.title || <i> "DELETED" </i>}</b>
         </ListItem>
       )}
     </Draggable>

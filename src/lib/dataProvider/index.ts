@@ -31,7 +31,7 @@ export const client = new ApolloClient({
   },
   onError (e) {
     console.log("Error: ", e)
-  }
+  },
 });
 
 export const buildFieldsCustom =  (type: { name: string; }) => {
@@ -67,6 +67,7 @@ export const buildFieldsCustom =  (type: { name: string; }) => {
         null,
         gqlTypes.selectionSet([
           gqlTypes.field(gqlTypes.name('contentId')),
+          gqlTypes.field(gqlTypes.name('order')),
           gqlTypes.field(
             gqlTypes.name('content'),
             null,
