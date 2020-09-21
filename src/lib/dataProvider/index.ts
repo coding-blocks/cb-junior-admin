@@ -17,21 +17,19 @@ import {
 import getResponseParser from './ra-data-hasura-graphql-src/getResponseParser';
 // @ts-ignore
 import * as gqlTypes from 'graphql-ast-types-browser';
+import config from "../../config";
 
 
 
 export const client = new ApolloClient({
-  uri: 'http://139.59.7.146:8080/v1/graphql',
-  headers: {
+  uri: config.graphqlEndpoint,
+  get headers () {
     // do a getter cuz we want this to be "reactive"
-    get 'Authorization'() {
-      const jwt = localStorage.getItem("login_jwt")
-      return jwt ? `Bearer ${jwt}` : ''
-    }
-  },
-  onError (e) {
-    console.log("Error: ", e)
-  },
+    const jwt = localStorage.getItem("login_jwt")
+    return ({
+      ...(jwt && {Authorization: `Bearer ${jwt}`})
+    })
+  }
 });
 
 export const buildFieldsCustom =  (type: { name: string; }) => {

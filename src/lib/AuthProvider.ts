@@ -1,4 +1,5 @@
 import axios from 'axios'
+import config from "../config";
 
 type LoginCreds = {
   username: string,
@@ -6,7 +7,7 @@ type LoginCreds = {
 }
 
 const ax = axios.create({
-  baseURL: 'http://139.59.7.146:4343/api/',
+  baseURL: config.apiEndpoint,
   timeout: 2000,
 })
 
