@@ -12,7 +12,7 @@ const ListItem = styled.div`
 const List = styled.div`
   padding: 8px;
   border: 1px solid grey;
-  background-color: ${props => props.isDraggingOver ? '#2097F3': 'white'}
+  background-color: ${props => props.isDraggingOver ? '#EDEEF2': 'white'}
 `
 
 const Title = styled.div`
@@ -39,7 +39,7 @@ const OrderedArrayInput = (props) => {
 
     const newValues = Array.from(values)
     newValues.splice(source.index, 1);
-    newValues.splice(destination.index, 0, draggableId)
+    newValues.splice(destination.index, 0, +draggableId)
 
     input.onChange(newValues)
   }
@@ -49,7 +49,7 @@ const OrderedArrayInput = (props) => {
       {children}
       { selectedChoices.length ?
       <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId={id}>
+        <Droppable droppableId={String(id)}>
           {(provided, snapshot) => (
             <List
               component='nav'
@@ -58,7 +58,6 @@ const OrderedArrayInput = (props) => {
               {...provided.droppableProps}>
 
               <Title>Order</Title>
-              {console.log(selectedChoices)}
               {selectedChoices.map(
                 (v, i) => <ChoiceItem value={v} index={i} key={v.id} />
               )}
@@ -77,7 +76,7 @@ const OrderedArrayInput = (props) => {
 const ChoiceItem = (props) => {
   const { value, index } = props;
   return (
-    <Draggable draggableId={value.id} index={index}>
+    <Draggable draggableId={String(value.id)} index={index}>
       {(provided, snapshot) => (
         <ListItem
           ref={provided.innerRef}
@@ -85,7 +84,7 @@ const ChoiceItem = (props) => {
           {...provided.dragHandleProps}
           isDragging={snapshot.isDragging}
         >
-          [<i>#{value.id}</i>] <b>{value.title || <i> "DELETED" </i>}</b>
+          [<i>ID: {value.id}</i>] <b>{value.title || <i> "DELETED" </i>}</b>
         </ListItem>
       )}
     </Draggable>
